@@ -1,0 +1,1169 @@
+{
+ "metadata": {
+  "kernelspec": {
+   "name": "python3",
+   "language": "python",
+   "display_name": "Python 3 (ipykernel)"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "python",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8"
+  }
+ },
+ "nbformat_minor": 4,
+ "nbformat": 4,
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "outputs": [],
+   "source": [
+    "#Importieren der relevanten Bibliotheken für das Projekt "
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "outputs": [],
+   "source": [
+    "import pandas as pd "
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "start_time": "2024-05-26T00:50:39.931309200Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "outputs": [],
+   "source": [
+    "import numpy"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T00:51:43.333098200Z",
+     "start_time": "2024-05-26T00:51:43.333098200Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "outputs": [],
+   "source": [
+    "import seaborn as sns"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T00:51:48.051904400Z",
+     "start_time": "2024-05-26T00:51:48.041350500Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "outputs": [],
+   "source": [
+    "import sklearn"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T00:51:51.653759400Z",
+     "start_time": "2024-05-26T00:51:51.286298300Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "outputs": [],
+   "source": [
+    "import streamlit"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T00:51:56.788407200Z",
+     "start_time": "2024-05-26T00:51:55.790351600Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "outputs": [],
+   "source": [
+    "import sklearn"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T00:53:14.955190400Z",
+     "start_time": "2024-05-26T00:53:14.954676600Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "outputs": [],
+   "source": [
+    "import ast"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:47:39.381926200Z",
+     "start_time": "2024-05-26T02:47:39.378410200Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "outputs": [],
+   "source": [
+    "from sklearn.preprocessing import StandardScaler"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:58:01.314883400Z",
+     "start_time": "2024-05-26T02:58:01.232328700Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "outputs": [],
+   "source": [
+    "from sklearn.neighbors import NearestNeighbors"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:01:13.556463700Z",
+     "start_time": "2024-05-26T03:01:12.942382500Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "outputs": [],
+   "source": [
+    "import pickle"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:02:46.207735600Z",
+     "start_time": "2024-05-26T03:02:46.196217500Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "   Unnamed: 0  acousticness                album_id  \\\n",
+      "0           0         0.294  0D3QufeCudpQANOR7luqdr   \n",
+      "1           1         0.863  1bcqsH5UyTBzmh9YizdsBE   \n",
+      "2           2         0.750  4tKijjmxGClg4JOLAyo2qE   \n",
+      "3           3         0.763  6FeJF5r8roonnKraJxr4oB   \n",
+      "4           4         0.770  4tKijjmxGClg4JOLAyo2qE   \n",
+      "\n",
+      "                                        analysis_url  \\\n",
+      "0  https://api.spotify.com/v1/audio-analysis/5qlj...   \n",
+      "1  https://api.spotify.com/v1/audio-analysis/3VAX...   \n",
+      "2  https://api.spotify.com/v1/audio-analysis/1L3Y...   \n",
+      "3  https://api.spotify.com/v1/audio-analysis/6aCe...   \n",
+      "4  https://api.spotify.com/v1/audio-analysis/1Vo8...   \n",
+      "\n",
+      "                   artists_id  \\\n",
+      "0  ['3mxJuHRn2ZWD5OofvJtDZY']   \n",
+      "1  ['4xWMewm6CYMstu0sPgd9jJ']   \n",
+      "2  ['3hYaK5FF3YAglCj5HZgBnP']   \n",
+      "3  ['2KQsUB9DRBcJk17JWX1eXD']   \n",
+      "4  ['3hYaK5FF3YAglCj5HZgBnP']   \n",
+      "\n",
+      "                                   available_markets country  danceability  \\\n",
+      "0  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...      BE         0.698   \n",
+      "1  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...      BE         0.719   \n",
+      "2                                             ['GB']      BE         0.466   \n",
+      "3  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...      BE         0.719   \n",
+      "4                                             ['GB']      BE         0.460   \n",
+      "\n",
+      "   disc_number  duration_ms  ...  \\\n",
+      "0          1.0     235584.0  ...   \n",
+      "1          1.0     656960.0  ...   \n",
+      "2          1.0     492840.0  ...   \n",
+      "3          1.0     316578.0  ...   \n",
+      "4          1.0     558880.0  ...   \n",
+      "\n",
+      "                                         preview_url speechiness    tempo  \\\n",
+      "0  https://p.scdn.co/mp3-preview/1b05a902da3a251d...      0.0262  115.018   \n",
+      "1  https://p.scdn.co/mp3-preview/d8140736a6131cb5...      0.9220  115.075   \n",
+      "2  https://p.scdn.co/mp3-preview/c8af28fb15185b18...      0.9440   79.565   \n",
+      "3  https://p.scdn.co/mp3-preview/7629b8e9f31f6e9b...      0.9380  112.822   \n",
+      "4  https://p.scdn.co/mp3-preview/32be593c0eb82868...      0.9430   81.260   \n",
+      "\n",
+      "   time_signature                                         track_href  \\\n",
+      "0             4.0  https://api.spotify.com/v1/tracks/5qljLQuKnNJf...   \n",
+      "1             3.0  https://api.spotify.com/v1/tracks/3VAX2MJdmdqA...   \n",
+      "2             4.0  https://api.spotify.com/v1/tracks/1L3YAhsEMrGV...   \n",
+      "3             3.0  https://api.spotify.com/v1/tracks/6aCe9zzoZmCo...   \n",
+      "4             4.0  https://api.spotify.com/v1/tracks/1Vo802A38tPF...   \n",
+      "\n",
+      "   track_name_prev  track_number                                   uri  \\\n",
+      "0         track_14           1.0  spotify:track:5qljLQuKnNJf4F4vfxQB0V   \n",
+      "1          track_3           3.0  spotify:track:3VAX2MJdmdqARLSU5hPMpm   \n",
+      "2          track_4           4.0  spotify:track:1L3YAhsEMrGVvCgDXj2TYn   \n",
+      "3          track_9           1.0  spotify:track:6aCe9zzoZmCojX7bbgKKtf   \n",
+      "4          track_2           2.0  spotify:track:1Vo802A38tPFHmje1h91um   \n",
+      "\n",
+      "   valence   type  \n",
+      "0   0.6220  track  \n",
+      "1   0.5890  track  \n",
+      "2   0.0850  track  \n",
+      "3   0.5330  track  \n",
+      "4   0.0906  track  \n",
+      "\n",
+      "[5 rows x 32 columns]\n",
+      "   Unnamed: 0 album_type               artist_id  \\\n",
+      "0           0     single  3DiDSECUqqY1AuBP8qtaIa   \n",
+      "1           1      album  6s1pCNXcbdtQJlsnM1hRIA   \n",
+      "2           2     single  5YjfNaHq05WrwldRe1QSBc   \n",
+      "3           3     single  2G9Vc16JCpnZmK4uGH46Fa   \n",
+      "4           4     single  2dwM9OcE4c3Ph1UBINSodx   \n",
+      "\n",
+      "                                   available_markets  \\\n",
+      "0  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...   \n",
+      "1  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...   \n",
+      "2  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...   \n",
+      "3  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...   \n",
+      "4  ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH...   \n",
+      "\n",
+      "                                       external_urls  \\\n",
+      "0  {'spotify': 'https://open.spotify.com/album/1g...   \n",
+      "1  {'spotify': 'https://open.spotify.com/album/4K...   \n",
+      "2  {'spotify': 'https://open.spotify.com/album/7n...   \n",
+      "3  {'spotify': 'https://open.spotify.com/album/6p...   \n",
+      "4  {'spotify': 'https://open.spotify.com/album/1X...   \n",
+      "\n",
+      "                                                href                      id  \\\n",
+      "0  https://api.spotify.com/v1/albums/1gAM7M4rBwEb...  1gAM7M4rBwEbSPeAQR2nx1   \n",
+      "1  https://api.spotify.com/v1/albums/4KfJZV7WfolY...  4KfJZV7WfolYlxBzOTo66s   \n",
+      "2  https://api.spotify.com/v1/albums/7nLYY7uAVUb5...  7nLYY7uAVUb57kpd7tZxnS   \n",
+      "3  https://api.spotify.com/v1/albums/6p20Rt4x2Qn5...  6p20Rt4x2Qn5mUMRi1s6pj   \n",
+      "4  https://api.spotify.com/v1/albums/1XeoOqC1q7U2...  1XeoOqC1q7U2iyLEQJ64cu   \n",
+      "\n",
+      "                                              images  \\\n",
+      "0  [{'height': 640, 'url': 'https://i.scdn.co/ima...   \n",
+      "1  [{'height': 640, 'url': 'https://i.scdn.co/ima...   \n",
+      "2  [{'height': 640, 'url': 'https://i.scdn.co/ima...   \n",
+      "3  [{'height': 640, 'url': 'https://i.scdn.co/ima...   \n",
+      "4  [{'height': 640, 'url': 'https://i.scdn.co/ima...   \n",
+      "\n",
+      "                                                name release_date  \\\n",
+      "0                              If I Ain't Got You EP   2019-02-08   \n",
+      "1  Shostakovich Symphony No.5 - Four Romances on ...   2019-03-01   \n",
+      "2                                       Take My Bass   2019-03-14   \n",
+      "3                                Hypnotizing (Are U)   2016-11-16   \n",
+      "4                                           Sunshine   2018-07-20   \n",
+      "\n",
+      "  release_date_precision  total_tracks                track_id  \\\n",
+      "0                    day             6  2iejTMy9XZ8Gaae0aQ2yl0   \n",
+      "1                    day             8  1WQfghEjszJJ4H8MAWrQ2C   \n",
+      "2                    day             1  3jJKj4QTK3v18ZSwpk7AcV   \n",
+      "3                    day             1  1xGtDafUZbHyYC3Xarcbrj   \n",
+      "4                    day             1  0gWtsXvXOzAT6FtM3ur8in   \n",
+      "\n",
+      "  track_name_prev                                   uri   type  \n",
+      "0        track_32  spotify:album:1gAM7M4rBwEbSPeAQR2nx1  album  \n",
+      "1        track_11  spotify:album:4KfJZV7WfolYlxBzOTo66s  album  \n",
+      "2        track_15  spotify:album:7nLYY7uAVUb57kpd7tZxnS  album  \n",
+      "3        track_46  spotify:album:6p20Rt4x2Qn5mUMRi1s6pj  album  \n",
+      "4        track_10  spotify:album:1XeoOqC1q7U2iyLEQJ64cu  album  \n",
+      "   Unnamed: 0  artist_popularity  followers  \\\n",
+      "0           0                 44      23230   \n",
+      "1           1                 22        313   \n",
+      "2           2                 26       1596   \n",
+      "3           3                 31        149   \n",
+      "4           4                 21         11   \n",
+      "\n",
+      "                                              genres                      id  \\\n",
+      "0  ['sertanejo', 'sertanejo pop', 'sertanejo trad...  4mGnpjhqgx4RUdsIJiURdo   \n",
+      "1                                                 []  1dLnVku4VQUOLswwDFvRc9   \n",
+      "2                                ['danish pop rock']  6YVY310fjfUzKi8hiqR7iK   \n",
+      "3                             ['uk alternative pop']  2VElyouiCfoYPDJluzwJwK   \n",
+      "4                                 ['french baroque']  4agVy03qW8juSysCTUOuDI   \n",
+      "\n",
+      "                  name                track_id track_name_prev    type  \n",
+      "0        Juliano Cezar  0wmDmAILuW9e2aRttkl4aC         track_9  artist  \n",
+      "1       The Grenadines  4wqwj0gA8qPZKLl5WVqXml        track_30  artist  \n",
+      "2              Gangway  1bFqWDbvHmZe2f4Nf9qaD8        track_38  artist  \n",
+      "3                FADES  3MFSUBAidPzRBbIS7BDj1S        track_34  artist  \n",
+      "4  Jean-Pierre Guignon  2r3q57FhxdsCyYr0kuDq4b        track_26  artist  \n",
+      "   Unnamed: 0  Chroma_1  Chroma_10  Chroma_11  Chroma_12  Chroma_2  Chroma_3  \\\n",
+      "0           0  0.438296   0.472769   0.427441   0.436688  0.467697  0.493862   \n",
+      "1           1  0.596605   0.368288   0.285263   0.302211  0.905805  0.510909   \n",
+      "2           2  0.505224   0.500420   0.506773   0.488258  0.498356  0.573582   \n",
+      "3           3  0.525690   0.666469   0.579492   0.498920  0.598528  0.631578   \n",
+      "4           4  0.632214   0.503698   0.496942   0.611532  0.634613  0.697265   \n",
+      "\n",
+      "   Chroma_4  Chroma_5  Chroma_6  ...  Tonnetz_4  Tonnetz_5  Tonnetz_6  \\\n",
+      "0  0.512244  0.568658  0.560524  ...   0.018434  -0.001759  -0.006392   \n",
+      "1  0.221708  0.311248  0.491277  ...   0.046941   0.005665  -0.026928   \n",
+      "2  0.690761  0.742858  0.686282  ...  -0.006929   0.004968   0.008947   \n",
+      "3  0.501693  0.500468  0.587101  ...  -0.027382  -0.009689   0.001402   \n",
+      "4  0.557012  0.530836  0.444279  ...   0.003728  -0.002780  -0.010120   \n",
+      "\n",
+      "        ZCR  entropy_energy  spectral_bandwith  spectral_centroid  \\\n",
+      "0  0.067966      -89.113389        2564.247669        3558.400706   \n",
+      "1  0.047308     -127.945239        2370.181495        1499.689590   \n",
+      "2  0.058463     -238.285176        2973.294736        1543.550034   \n",
+      "3  0.080547     -148.785733        2716.749483        3017.248824   \n",
+      "4  0.084945     -176.618314        3096.692876        2118.686992   \n",
+      "\n",
+      "   spectral_rollOff_max  spectral_rollOff_min                track_id  \n",
+      "0           4508.506071            367.831109  19YEk4OVQZn3GfoxbpNrU6  \n",
+      "1           3647.394611            230.165275  6zJms3MX11Qu1IKF44LoRW  \n",
+      "2           5623.349330            187.290534  1WugzepXsLjnsM0K4UaWYc  \n",
+      "3           5799.931595            160.940693  1pSlTbCrUJ9rmwj5CNNrX4  \n",
+      "4           6560.018666            229.131948  5yruvWJs3mL00w4slpCVzN  \n",
+      "\n",
+      "[5 rows x 209 columns]\n",
+      "   Unnamed: 0  mean_syllables_word  mean_words_sentence  n_sentences  n_words  \\\n",
+      "0           0                -1.00                -1.00           -1       -1   \n",
+      "1           1                 1.10                 5.65           31      326   \n",
+      "2           2                 1.37                 4.77           74      532   \n",
+      "3           3                 1.95                 3.38           72      430   \n",
+      "4           4                 1.16                 2.99           68      368   \n",
+      "\n",
+      "   sentence_similarity                track_id  vocabulary_wealth  \n",
+      "0            -1.000000  5KIfHjHI5NIsPHNt58qua0              -1.00  \n",
+      "1             0.043011  13keyz9ikBe6ZpRasw7l4X               0.45  \n",
+      "2             0.050352  1WugzepXsLjnsM0K4UaWYc               0.59  \n",
+      "3             0.028560  2MO6oEAlMKcsfI8xP3yoy8               0.49  \n",
+      "4             0.047849  1i4St7fmSUE9nB3R9n8fol               0.47  \n"
+     ]
+    }
+   ],
+   "source": [
+    "#Datensätze laden\n",
+    "tracks_df = pd.read_csv(r'C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\spotify_tracks.csv')\n",
+    "albums_df = pd.read_csv(r'C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\spotify_albums.csv')\n",
+    "artists_df = pd.read_csv(r'C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\spotify_artists.csv')\n",
+    "audio_features_df = pd.read_csv(r'C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\low_level_audio_features.csv')\n",
+    "lyrics_features_df = pd.read_csv(r'C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\lyrics_features.csv')\n",
+    "\n",
+    "# Anzeigen der ersten paar Zeilen von jedem DataFrame\n",
+    "print(tracks_df.head())\n",
+    "print(albums_df.head())\n",
+    "print(artists_df.head())\n",
+    "print(audio_features_df.head())\n",
+    "print(lyrics_features_df.head())"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:48:26.451529600Z",
+     "start_time": "2024-05-26T02:48:15.476069600Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 101939 entries, 0 to 101938\n",
+      "Data columns (total 32 columns):\n",
+      " #   Column             Non-Null Count   Dtype  \n",
+      "---  ------             --------------   -----  \n",
+      " 0   Unnamed: 0         101939 non-null  int64  \n",
+      " 1   acousticness       101939 non-null  float64\n",
+      " 2   album_id           101939 non-null  object \n",
+      " 3   analysis_url       101939 non-null  object \n",
+      " 4   artists_id         101939 non-null  object \n",
+      " 5   available_markets  101939 non-null  object \n",
+      " 6   country            101939 non-null  object \n",
+      " 7   danceability       101939 non-null  float64\n",
+      " 8   disc_number        101939 non-null  float64\n",
+      " 9   duration_ms        101939 non-null  float64\n",
+      " 10  energy             101939 non-null  float64\n",
+      " 11  href               101939 non-null  object \n",
+      " 12  id                 101939 non-null  object \n",
+      " 13  instrumentalness   101939 non-null  float64\n",
+      " 14  key                101939 non-null  float64\n",
+      " 15  liveness           101939 non-null  float64\n",
+      " 16  loudness           101939 non-null  float64\n",
+      " 17  lyrics             101939 non-null  object \n",
+      " 18  mode               101939 non-null  float64\n",
+      " 19  name               101939 non-null  object \n",
+      " 20  playlist           101939 non-null  object \n",
+      " 21  popularity         101939 non-null  float64\n",
+      " 22  preview_url        101939 non-null  object \n",
+      " 23  speechiness        101939 non-null  float64\n",
+      " 24  tempo              101939 non-null  float64\n",
+      " 25  time_signature     101939 non-null  float64\n",
+      " 26  track_href         101939 non-null  object \n",
+      " 27  track_name_prev    101939 non-null  object \n",
+      " 28  track_number       101939 non-null  float64\n",
+      " 29  uri                101939 non-null  object \n",
+      " 30  valence            101939 non-null  float64\n",
+      " 31  type               101939 non-null  object \n",
+      "dtypes: float64(16), int64(1), object(15)\n",
+      "memory usage: 24.9+ MB\n",
+      "None\n",
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 75511 entries, 0 to 75510\n",
+      "Data columns (total 16 columns):\n",
+      " #   Column                  Non-Null Count  Dtype \n",
+      "---  ------                  --------------  ----- \n",
+      " 0   Unnamed: 0              75511 non-null  int64 \n",
+      " 1   album_type              75511 non-null  object\n",
+      " 2   artist_id               75511 non-null  object\n",
+      " 3   available_markets       75511 non-null  object\n",
+      " 4   external_urls           75511 non-null  object\n",
+      " 5   href                    75511 non-null  object\n",
+      " 6   id                      75511 non-null  object\n",
+      " 7   images                  75511 non-null  object\n",
+      " 8   name                    75511 non-null  object\n",
+      " 9   release_date            75511 non-null  object\n",
+      " 10  release_date_precision  75511 non-null  object\n",
+      " 11  total_tracks            75511 non-null  int64 \n",
+      " 12  track_id                75511 non-null  object\n",
+      " 13  track_name_prev         75511 non-null  object\n",
+      " 14  uri                     75511 non-null  object\n",
+      " 15  type                    75511 non-null  object\n",
+      "dtypes: int64(2), object(14)\n",
+      "memory usage: 9.2+ MB\n",
+      "None\n",
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 56129 entries, 0 to 56128\n",
+      "Data columns (total 9 columns):\n",
+      " #   Column             Non-Null Count  Dtype \n",
+      "---  ------             --------------  ----- \n",
+      " 0   Unnamed: 0         56129 non-null  int64 \n",
+      " 1   artist_popularity  56129 non-null  int64 \n",
+      " 2   followers          56129 non-null  int64 \n",
+      " 3   genres             56129 non-null  object\n",
+      " 4   id                 56129 non-null  object\n",
+      " 5   name               56128 non-null  object\n",
+      " 6   track_id           56129 non-null  object\n",
+      " 7   track_name_prev    56129 non-null  object\n",
+      " 8   type               56129 non-null  object\n",
+      "dtypes: int64(3), object(6)\n",
+      "memory usage: 3.9+ MB\n",
+      "None\n",
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 101909 entries, 0 to 101908\n",
+      "Columns: 209 entries, Unnamed: 0 to track_id\n",
+      "dtypes: float64(207), int64(1), object(1)\n",
+      "memory usage: 162.5+ MB\n",
+      "None\n",
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 94954 entries, 0 to 94953\n",
+      "Data columns (total 8 columns):\n",
+      " #   Column               Non-Null Count  Dtype  \n",
+      "---  ------               --------------  -----  \n",
+      " 0   Unnamed: 0           94954 non-null  int64  \n",
+      " 1   mean_syllables_word  94954 non-null  float64\n",
+      " 2   mean_words_sentence  94954 non-null  float64\n",
+      " 3   n_sentences          94954 non-null  int64  \n",
+      " 4   n_words              94954 non-null  int64  \n",
+      " 5   sentence_similarity  94954 non-null  float64\n",
+      " 6   track_id             94954 non-null  object \n",
+      " 7   vocabulary_wealth    94954 non-null  float64\n",
+      "dtypes: float64(4), int64(3), object(1)\n",
+      "memory usage: 5.8+ MB\n",
+      "None\n",
+      "Unnamed: 0           0\n",
+      "acousticness         0\n",
+      "album_id             0\n",
+      "analysis_url         0\n",
+      "artists_id           0\n",
+      "available_markets    0\n",
+      "country              0\n",
+      "danceability         0\n",
+      "disc_number          0\n",
+      "duration_ms          0\n",
+      "energy               0\n",
+      "href                 0\n",
+      "id                   0\n",
+      "instrumentalness     0\n",
+      "key                  0\n",
+      "liveness             0\n",
+      "loudness             0\n",
+      "lyrics               0\n",
+      "mode                 0\n",
+      "name                 0\n",
+      "playlist             0\n",
+      "popularity           0\n",
+      "preview_url          0\n",
+      "speechiness          0\n",
+      "tempo                0\n",
+      "time_signature       0\n",
+      "track_href           0\n",
+      "track_name_prev      0\n",
+      "track_number         0\n",
+      "uri                  0\n",
+      "valence              0\n",
+      "type                 0\n",
+      "dtype: int64\n",
+      "Unnamed: 0                0\n",
+      "album_type                0\n",
+      "artist_id                 0\n",
+      "available_markets         0\n",
+      "external_urls             0\n",
+      "href                      0\n",
+      "id                        0\n",
+      "images                    0\n",
+      "name                      0\n",
+      "release_date              0\n",
+      "release_date_precision    0\n",
+      "total_tracks              0\n",
+      "track_id                  0\n",
+      "track_name_prev           0\n",
+      "uri                       0\n",
+      "type                      0\n",
+      "dtype: int64\n",
+      "Unnamed: 0           0\n",
+      "artist_popularity    0\n",
+      "followers            0\n",
+      "genres               0\n",
+      "id                   0\n",
+      "name                 1\n",
+      "track_id             0\n",
+      "track_name_prev      0\n",
+      "type                 0\n",
+      "dtype: int64\n",
+      "Unnamed: 0              0\n",
+      "Chroma_1                0\n",
+      "Chroma_10               0\n",
+      "Chroma_11               0\n",
+      "Chroma_12               0\n",
+      "                       ..\n",
+      "spectral_bandwith       0\n",
+      "spectral_centroid       0\n",
+      "spectral_rollOff_max    0\n",
+      "spectral_rollOff_min    0\n",
+      "track_id                0\n",
+      "Length: 209, dtype: int64\n",
+      "Unnamed: 0             0\n",
+      "mean_syllables_word    0\n",
+      "mean_words_sentence    0\n",
+      "n_sentences            0\n",
+      "n_words                0\n",
+      "sentence_similarity    0\n",
+      "track_id               0\n",
+      "vocabulary_wealth      0\n",
+      "dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Informationen zu den DataFrames laden & anzeigen\n",
+    "print(tracks_df.info())\n",
+    "print(albums_df.info())\n",
+    "print(artists_df.info())\n",
+    "print(audio_features_df.info())\n",
+    "print(lyrics_features_df.info())\n",
+    "\n",
+    "# Überprüfen auf fehlende Werte \n",
+    "print(tracks_df.isnull().sum())\n",
+    "print(albums_df.isnull().sum())\n",
+    "print(artists_df.isnull().sum())\n",
+    "print(audio_features_df.isnull().sum())\n",
+    "print(lyrics_features_df.isnull().sum())"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T01:19:33.678394700Z",
+     "start_time": "2024-05-26T01:19:33.410635800Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tracks DF Columns: Index(['Unnamed: 0', 'acousticness', 'album_id', 'analysis_url', 'artists_id',\n",
+      "       'available_markets', 'country', 'danceability', 'disc_number',\n",
+      "       'duration_ms', 'energy', 'href', 'id', 'instrumentalness', 'key',\n",
+      "       'liveness', 'loudness', 'lyrics', 'mode', 'name', 'playlist',\n",
+      "       'popularity', 'preview_url', 'speechiness', 'tempo', 'time_signature',\n",
+      "       'track_href', 'track_name_prev', 'track_number', 'uri', 'valence',\n",
+      "       'type'],\n",
+      "      dtype='object')\n",
+      "Audio Features DF Columns: Index(['Unnamed: 0', 'Chroma_1', 'Chroma_10', 'Chroma_11', 'Chroma_12',\n",
+      "       'Chroma_2', 'Chroma_3', 'Chroma_4', 'Chroma_5', 'Chroma_6',\n",
+      "       ...\n",
+      "       'Tonnetz_4', 'Tonnetz_5', 'Tonnetz_6', 'ZCR', 'entropy_energy',\n",
+      "       'spectral_bandwith', 'spectral_centroid', 'spectral_rollOff_max',\n",
+      "       'spectral_rollOff_min', 'track_id'],\n",
+      "      dtype='object', length=209)\n",
+      "Lyrics Features DF Columns: Index(['Unnamed: 0', 'mean_syllables_word', 'mean_words_sentence',\n",
+      "       'n_sentences', 'n_words', 'sentence_similarity', 'track_id',\n",
+      "       'vocabulary_wealth'],\n",
+      "      dtype='object')\n",
+      "Albums DF Columns: Index(['Unnamed: 0', 'album_type', 'artist_id', 'available_markets',\n",
+      "       'external_urls', 'href', 'id', 'images', 'name', 'release_date',\n",
+      "       'release_date_precision', 'total_tracks', 'track_id', 'track_name_prev',\n",
+      "       'uri', 'type'],\n",
+      "      dtype='object')\n",
+      "Artists DF Columns: Index(['Unnamed: 0', 'artist_popularity', 'followers', 'genres', 'id', 'name',\n",
+      "       'track_id', 'track_name_prev', 'type'],\n",
+      "      dtype='object')\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Überprüfen der Spaltennamen\n",
+    "print(\"Tracks DF Columns:\", tracks_df.columns)\n",
+    "print(\"Audio Features DF Columns:\", audio_features_df.columns)\n",
+    "print(\"Lyrics Features DF Columns:\", lyrics_features_df.columns)\n",
+    "print(\"Albums DF Columns:\", albums_df.columns)\n",
+    "print(\"Artists DF Columns:\", artists_df.columns)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:48:52.906305400Z",
+     "start_time": "2024-05-26T02:48:52.904782800Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "outputs": [],
+   "source": [
+    "# Umbenennen der Spalten für Konsistenz\n",
+    "tracks_df = tracks_df.rename(columns={'id': 'track_id', 'artists_id': 'artist_id'})\n",
+    "albums_df = albums_df.rename(columns={'id': 'album_id'})\n",
+    "artists_df = artists_df.rename(columns={'id': 'artist_id'})"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:50:13.397077500Z",
+     "start_time": "2024-05-26T02:50:13.342231400Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tracks DF Columns (after renaming): Index(['Unnamed: 0', 'acousticness', 'album_id', 'analysis_url', 'artist_id',\n",
+      "       'available_markets', 'country', 'danceability', 'disc_number',\n",
+      "       'duration_ms', 'energy', 'href', 'track_id', 'instrumentalness', 'key',\n",
+      "       'liveness', 'loudness', 'lyrics', 'mode', 'name', 'playlist',\n",
+      "       'popularity', 'preview_url', 'speechiness', 'tempo', 'time_signature',\n",
+      "       'track_href', 'track_name_prev', 'track_number', 'uri', 'valence',\n",
+      "       'type'],\n",
+      "      dtype='object')\n",
+      "Albums DF Columns (after renaming): Index(['Unnamed: 0', 'album_type', 'artist_id', 'available_markets',\n",
+      "       'external_urls', 'href', 'album_id', 'images', 'name', 'release_date',\n",
+      "       'release_date_precision', 'total_tracks', 'track_id', 'track_name_prev',\n",
+      "       'uri', 'type'],\n",
+      "      dtype='object')\n",
+      "Artists DF Columns (after renaming): Index(['Unnamed: 0', 'artist_popularity', 'followers', 'genres', 'artist_id',\n",
+      "       'name', 'track_id', 'track_name_prev', 'type'],\n",
+      "      dtype='object')\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Sicherstellen, dass die artist_id-Spalte vorhanden ist\n",
+    "print(\"Tracks DF Columns (after renaming):\", tracks_df.columns)\n",
+    "print(\"Albums DF Columns (after renaming):\", albums_df.columns)\n",
+    "print(\"Artists DF Columns (after renaming):\", artists_df.columns)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:50:22.377259400Z",
+     "start_time": "2024-05-26T02:50:22.345778Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "outputs": [],
+   "source": [
+    "# Konvertieren von artist_id Spaltenwerten in tracks_df von Listen zu einzelnen Werten\n",
+    "tracks_df['artist_id'] = tracks_df['artist_id'].apply(ast.literal_eval)  # Umwandeln von String zu Liste\n",
+    "tracks_df = tracks_df.explode('artist_id')  # Auflösen der Listen zu separaten Zeilen"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:51:28.762903200Z",
+     "start_time": "2024-05-26T02:51:26.713426800Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "outputs": [],
+   "source": [
+    "# Funktion zum sicheren Entfernen von Spalten\n",
+    "def drop_columns_safely(df, columns):\n",
+    "    return df.drop(columns=[col for col in columns if col in df.columns])\n",
+    "\n",
+    "tracks_df = drop_columns_safely(tracks_df, ['Unnamed: 0', 'analysis_url', 'available_markets', 'country', 'href', 'playlist', 'preview_url', 'track_href', 'track_name_prev', 'uri', 'type'])\n",
+    "albums_df = drop_columns_safely(albums_df, ['Unnamed: 0', 'available_markets', 'external_urls', 'href', 'images', 'release_date', 'release_date_precision', 'track_name_prev', 'uri', 'type'])\n",
+    "artists_df = drop_columns_safely(artists_df, ['Unnamed: 0', 'genres', 'track_name_prev', 'type'])\n",
+    "audio_features_df = drop_columns_safely(audio_features_df, ['Unnamed: 0'])\n",
+    "lyrics_features_df = drop_columns_safely(lyrics_features_df, ['Unnamed: 0'])\n"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:52:21.627609100Z",
+     "start_time": "2024-05-26T02:52:21.386596700Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tracks DF Columns (after removing and renaming): Index(['acousticness', 'album_id', 'artist_id', 'danceability', 'disc_number',\n",
+      "       'duration_ms', 'energy', 'track_id', 'instrumentalness', 'key',\n",
+      "       'liveness', 'loudness', 'lyrics', 'mode', 'name', 'popularity',\n",
+      "       'speechiness', 'tempo', 'time_signature', 'track_number', 'valence'],\n",
+      "      dtype='object')\n",
+      "Audio Features DF Columns: Index(['Chroma_1', 'Chroma_10', 'Chroma_11', 'Chroma_12', 'Chroma_2',\n",
+      "       'Chroma_3', 'Chroma_4', 'Chroma_5', 'Chroma_6', 'Chroma_7',\n",
+      "       ...\n",
+      "       'Tonnetz_4', 'Tonnetz_5', 'Tonnetz_6', 'ZCR', 'entropy_energy',\n",
+      "       'spectral_bandwith', 'spectral_centroid', 'spectral_rollOff_max',\n",
+      "       'spectral_rollOff_min', 'track_id'],\n",
+      "      dtype='object', length=208)\n",
+      "Lyrics Features DF Columns: Index(['mean_syllables_word', 'mean_words_sentence', 'n_sentences', 'n_words',\n",
+      "       'sentence_similarity', 'track_id', 'vocabulary_wealth'],\n",
+      "      dtype='object')\n",
+      "Albums DF Columns: Index(['album_type', 'artist_id', 'album_id', 'name', 'total_tracks',\n",
+      "       'track_id'],\n",
+      "      dtype='object')\n",
+      "Artists DF Columns: Index(['artist_popularity', 'followers', 'artist_id', 'name', 'track_id'], dtype='object')\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Überprüfen der Spaltennamen nach dem Entfernen und Umbenennen\n",
+    "print(\"Tracks DF Columns (after removing and renaming):\", tracks_df.columns)\n",
+    "print(\"Audio Features DF Columns:\", audio_features_df.columns)\n",
+    "print(\"Lyrics Features DF Columns:\", lyrics_features_df.columns)\n",
+    "print(\"Albums DF Columns:\", albums_df.columns)\n",
+    "print(\"Artists DF Columns:\", artists_df.columns)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:52:49.138287800Z",
+     "start_time": "2024-05-26T02:52:49.126891900Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "outputs": [],
+   "source": [
+    "# Entfernen der Zeile mit fehlendem Künstlernamen\n",
+    "artists_df = artists_df.dropna(subset=['name'])"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:32:20.588480200Z",
+     "start_time": "2024-05-26T02:32:20.556881600Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "outputs": [],
+   "source": [
+    "# Umbenennen von artist_id in albums_df, um Konflikte zu vermeiden\n",
+    "albums_df = albums_df.rename(columns={'artist_id': 'album_artist_id'})"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:53:18.102634400Z",
+     "start_time": "2024-05-26T02:53:18.083744800Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "artist_id in Tracks: True\n",
+      "album_id in Albums: True\n",
+      "album_artist_id in Albums: True\n",
+      "artist_id in Artists: True\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Überprüfen, ob die notwendigen Spalten vorhanden sind\n",
+    "print('artist_id in Tracks:', 'artist_id' in tracks_df.columns)\n",
+    "print('album_id in Albums:', 'album_id' in albums_df.columns)\n",
+    "print('album_artist_id in Albums:', 'album_artist_id' in albums_df.columns)\n",
+    "print('artist_id in Artists:', 'artist_id' in artists_df.columns)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:53:41.830535600Z",
+     "start_time": "2024-05-26T02:53:41.800842100Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Merged DF 1 shape: (139840, 228)\n",
+      "Merged DF 2 shape: (128684, 234)\n",
+      "Merged DF 3 shape: (128684, 239)\n",
+      "Merged DF 4 shape: (128684, 243)\n",
+      "         label  danceability  energy\n",
+      "0  0.698_0.606         0.698   0.606\n",
+      "1  0.543_0.612         0.543   0.612\n",
+      "2  0.719_0.308         0.719   0.308\n",
+      "3  0.752_0.338         0.752   0.338\n",
+      "4  0.688_0.304         0.688   0.304\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Sicherstellen, dass die artist_id-Spalte vorhanden ist\n",
+    "if 'artist_id' in tracks_df.columns and 'artist_id' in artists_df.columns:\n",
+    "    # Schrittweises Zusammenführen der Daten und Ausgabe der Zwischenschritte\n",
+    "    merged_df_1 = pd.merge(tracks_df, audio_features_df, on='track_id')\n",
+    "    print(\"Merged DF 1 shape:\", merged_df_1.shape)\n",
+    "    merged_df_2 = pd.merge(merged_df_1, lyrics_features_df, on='track_id')\n",
+    "    print(\"Merged DF 2 shape:\", merged_df_2.shape)\n",
+    "    merged_df_3 = pd.merge(merged_df_2, albums_df, on='album_id')\n",
+    "    print(\"Merged DF 3 shape:\", merged_df_3.shape)\n",
+    "\n",
+    "    # Sicherstellen, dass 'artist_id' auch in merged_df_3 vorhanden ist\n",
+    "    if 'artist_id' in merged_df_3.columns:\n",
+    "        merged_df_4 = pd.merge(merged_df_3, artists_df, on='artist_id')\n",
+    "        print(\"Merged DF 4 shape:\", merged_df_4.shape)\n",
+    "\n",
+    "        # Komplexes Label, dass  auf Tanzbarkeit und Energie basiert\n",
+    "        merged_df_4['label'] = merged_df_4['danceability'].astype(str) + '_' + merged_df_4['energy'].astype(str)\n",
+    "\n",
+    "        # Anzeigen der ersten paar Zeilen mit den neuen Labels\n",
+    "        print(merged_df_4[['label', 'danceability', 'energy']].head())\n",
+    "    else:\n",
+    "        print(\"'artist_id' nicht in merged_df_3 vorhanden.\")\n",
+    "else:\n",
+    "    print(\"Die notwendige Spalte 'artist_id' ist in einem der DataFrames nicht vorhanden.\")"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T02:55:28.466817400Z",
+     "start_time": "2024-05-26T02:55:25.738569100Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "outputs": [],
+   "source": [
+    "# Zusammengeführte Daten als CSV-Datei speichern\n",
+    "merged_df_4.to_csv('merged_df_4.csv', index=False)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:07:13.601939Z",
+     "start_time": "2024-05-26T03:06:30.129256300Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 79,
+   "outputs": [],
+   "source": [
+    "# Relevante Features auswählen\n",
+    "features = ['danceability', 'energy', 'tempo', 'valence', 'acousticness', 'instrumentalness', 'liveness', 'speechiness']"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:07:48.050976600Z",
+     "start_time": "2024-05-26T03:07:48.035078400Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "outputs": [],
+   "source": [
+    "# Features und Track IDs extrahieren\n",
+    "X = merged_df_4[features]\n",
+    "track_ids = merged_df_4['track_id']"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:07:52.331218300Z",
+     "start_time": "2024-05-26T03:07:52.318442500Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "outputs": [],
+   "source": [
+    "# Normalisierung der Features\n",
+    "scaler = StandardScaler()\n",
+    "X_scaled = scaler.fit_transform(X)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:07:57.099723800Z",
+     "start_time": "2024-05-26T03:07:57.079077100Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "outputs": [],
+   "source": [
+    "# Normalisierte Features in ein DataFrame konvertieren\n",
+    "X_scaled_df = pd.DataFrame(X_scaled, columns=features)\n",
+    "X_scaled_df['track_id'] = track_ids"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:08:04.054853800Z",
+     "start_time": "2024-05-26T03:08:04.032122Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "outputs": [],
+   "source": [
+    "# Speichern des Scalers für zukünftige Verwendung\n",
+    "import pickle\n",
+    "with open('scaler.pkl', 'wb') as f:\n",
+    "    pickle.dump(scaler, f)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:08:08.380645500Z",
+     "start_time": "2024-05-26T03:08:08.373562200Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "outputs": [
+    {
+     "data": {
+      "text/plain": "NearestNeighbors(algorithm='ball_tree', n_neighbors=10)",
+      "text/html": "<style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: \"▸\";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: \"▾\";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: \"\";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id=\"sk-container-id-2\" class=\"sk-top-container\"><div class=\"sk-text-repr-fallback\"><pre>NearestNeighbors(algorithm=&#x27;ball_tree&#x27;, n_neighbors=10)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class=\"sk-container\" hidden><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-2\" type=\"checkbox\" checked><label for=\"sk-estimator-id-2\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">NearestNeighbors</label><div class=\"sk-toggleable__content\"><pre>NearestNeighbors(algorithm=&#x27;ball_tree&#x27;, n_neighbors=10)</pre></div></div></div></div></div>"
+     },
+     "execution_count": 84,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# KNN-Modell trainieren\n",
+    "knn = NearestNeighbors(n_neighbors=10, algorithm='ball_tree')\n",
+    "knn.fit(X_scaled_df[features])"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:08:12.636068900Z",
+     "start_time": "2024-05-26T03:08:12.406050900Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "outputs": [],
+   "source": [
+    "# Modell speichern\n",
+    "with open('knn_model.pkl', 'wb') as f:\n",
+    "    pickle.dump(knn, f)"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:02:19.733531400Z",
+     "start_time": "2024-05-26T03:02:19.654446400Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "outputs": [],
+   "source": [
+    "# Laden der Modelle und Daten\n",
+    "scaler = pickle.load(open('scaler.pkl', 'rb'))\n",
+    "knn = pickle.load(open('knn_model.pkl', 'rb'))\n",
+    "merged_df_4 = pd.read_csv('C:\\\\Users\\\\monaa\\\\Desktop\\\\Seminare & Vorlesungen\\\\Analyseanwendungen\\\\spotify_data\\\\SpotGenTrack\\\\Data Sources\\\\merged_df_4.csv')"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:11:28.548368200Z",
+     "start_time": "2024-05-26T03:11:16.683719200Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "outputs": [],
+   "source": [
+    "# Feature-Auswahl\n",
+    "features = ['danceability', 'energy', 'tempo', 'valence', 'acousticness', 'instrumentalness', 'liveness', 'speechiness']"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:12:00.647667300Z",
+     "start_time": "2024-05-26T03:12:00.597907Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 92,
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "2024-05-26 05:16:01.707 \n",
+      "  \u001B[33m\u001B[1mWarning:\u001B[0m to view this Streamlit app on a browser, run it with the following\n",
+      "  command:\n",
+      "\n",
+      "    streamlit run C:\\Users\\monaa\\anaconda3\\Lib\\site-packages\\ipykernel_launcher.py [ARGUMENTS]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": "DeltaGenerator()"
+     },
+     "execution_count": 92,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import streamlit as st\n",
+    "st.title('Spotify Song Recommendation System')"
+   ],
+   "metadata": {
+    "collapsed": false,
+    "ExecuteTime": {
+     "end_time": "2024-05-26T03:16:01.739369400Z",
+     "start_time": "2024-05-26T03:16:01.642722800Z"
+    }
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "outputs": [],
+   "source": [],
+   "metadata": {
+    "collapsed": false
+   }
+  }
+ ]
+}
