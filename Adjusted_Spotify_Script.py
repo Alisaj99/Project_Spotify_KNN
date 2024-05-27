@@ -13,8 +13,9 @@ import seaborn as sns
 
 # Laden der Datensätze
 # Laden der Datensätze
-tracks_df = pd.read_csv('spotify_tracks.csv')
+
 albums_df = pd.read_csv('spotify_albums.csv')
+tracks_df = pd.read_csv('spotify_tracks.csv')
 artists_df = pd.read_csv('spotify_artists.csv')
 audio_features_df = pd.read_csv('low_level_audio_features.csv')
 lyrics_features_df = pd.read_csv('lyrics_features.csv') 
