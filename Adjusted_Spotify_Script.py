@@ -10,16 +10,15 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Daten laden
+def load_data(file_name):
+    return pd.read_csv(file_name)
 
-# Laden der Datensätze
-# Laden der Datensätze
-
-albums_df = pd.read_csv('spotify_albums.csv')
-tracks_df = pd.read_csv('spotify_tracks.csv')
-artists_df = pd.read_csv('spotify_artists.csv')
-audio_features_df = pd.read_csv('low_level_audio_features.csv')
-lyrics_features_df = pd.read_csv('lyrics_features.csv') 
-
+tracks_df = load_data('spotify_tracks.csv')
+albums_df = load_data('spotify_albums.csv')
+artists_df = load_data('spotify_artists.csv')
+audio_features_df = load_data('low_level_audio_features.csv')
+lyrics_features_df = load_data('lyrics_features.csv')
 
 # Explorative Datenanalyse (EDA) durchführen
 numerical_features = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'speechiness', 'tempo', 'valence']
