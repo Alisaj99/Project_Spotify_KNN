@@ -12,11 +12,12 @@ import seaborn as sns
 
 
 # Laden der Datensätze
-tracks_df = pd.read_csv('./spotify_tracks.csv')
-albums_df = pd.read_csv('./spotify_albums.csv')
-artists_df = pd.read_csv('./spotify_artists.csv')
-audio_features_df = pd.read_csv('./low_level_audio_features.csv')
-lyrics_features_df = pd.read_csv('./lyrics_features.csv')
+# Laden der Datensätze
+tracks_df = pd.read_csv('spotify_tracks.csv')
+albums_df = pd.read_csv('spotify_albums.csv')
+artists_df = pd.read_csv('spotify_artists.csv')
+audio_features_df = pd.read_csv('low_level_audio_features.csv')
+lyrics_features_df = pd.read_csv('lyrics_features.csv') 
 
 
 # Explorative Datenanalyse (EDA) durchführen
