@@ -12,11 +12,13 @@ import seaborn as sns
 
 
 # Laden der Datensätze
-tracks_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_tracks.csv')
+tracks_df = pd.read_csv('/home/monaa/Desktop/Seminare & Vorlesungen/Analyseanwendungen/spotify_data/SpotGenTrack/Data Sources/spotify_data/SpotGenTrack/Data Sources/spotify_tracks.csv')
 albums_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_albums.csv')
 artists_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_artists.csv')
 audio_features_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/low_level_audio_features.csv')
 lyrics_features_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/lyrics_features.csv')
+
+
 
 
 # Explorative Datenanalyse (EDA) durchführen
