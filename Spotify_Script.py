@@ -12,11 +12,11 @@ import seaborn as sns
 
 
 # Laden der Datensätze
-tracks_df = pd.read_csv(r'C:\Users\monaa\Desktop\Seminare & Vorlesungen\Analyseanwendungen\spotify_data\SpotGenTrack\Data Sources\spotify_tracks.csv')
-albums_df = pd.read_csv(r'C:\Users\monaa\Desktop\Seminare & Vorlesungen\Analyseanwendungen\spotify_data\SpotGenTrack\Data Sources\spotify_albums.csv')
-artists_df = pd.read_csv(r'C:\Users\monaa\Desktop\Seminare & Vorlesungen\Analyseanwendungen\spotify_data\SpotGenTrack\Data Sources\spotify_artists.csv')
-audio_features_df = pd.read_csv(r'C:\Users\monaa\Desktop\Seminare & Vorlesungen\Analyseanwendungen\spotify_data\SpotGenTrack\Data Sources\low_level_audio_features.csv')
-lyrics_features_df = pd.read_csv(r'C:\Users\monaa\Desktop\Seminare & Vorlesungen\Analyseanwendungen\spotify_data\SpotGenTrack\Data Sources\lyrics_features.csv')
+tracks_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_tracks.csv')
+albums_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_albums.csv')
+artists_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/spotify_artists.csv')
+audio_features_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/low_level_audio_features.csv')
+lyrics_features_df = pd.read_csv('/home/monaa/spotify_data/SpotGenTrack/Data Sources/lyrics_features.csv')
 
 
 # Explorative Datenanalyse (EDA) durchführen
@@ -28,24 +28,6 @@ for feature in numerical_features:
     plt.xlabel(feature)
     plt.ylabel('Häufigkeit')
     plt.show()
-
-# Features auswählen und Daten vorbereiten
-features = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'speechiness', 'tempo', 'valence']
-X = tracks_df[features]
-y = tracks_df['genre']  # Beispiel für ein Label, Anpassung erforderlich
-
-# Daten skalieren
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# Modell trainieren
-knn = NearestNeighbors(n_neighbors=5)
-knn.fit(X_scaled)
-
-# Modellvalidierung
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
-predictions = knn.predict(X_test)
-print("Validierungsgenauigkeit:", accuracy_score(y_test, predictions))
 
 # Streamlit App
 st.title('Spotify Song-Empfehlungssystem')
@@ -77,4 +59,3 @@ st.write('Empfohlene Songs:')
 for idx in indices[0]:
     song = tracks_df.iloc[idx]
     st.write(f"{song['song_title']} von {song['artist_name']} - Genre: {song['genre']}")
-
