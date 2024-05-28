@@ -14,7 +14,7 @@ import seaborn as sns
 def load_data(file_name):
     return pd.read_csv(file_name)
 
-tracks_df = load_data('spotify_tracks.csv')
+tracks_df = load_data('./spotify_tracks.csv')
 albums_df = load_data('spotify_albums.csv')
 artists_df = load_data('spotify_artists.csv')
 audio_features_df = load_data('low_level_audio_features.csv')
