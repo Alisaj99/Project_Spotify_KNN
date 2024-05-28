@@ -10,6 +10,13 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import os
+print("Aktuelles Arbeitsverzeichnis:", os.getcwd())
+try:
+    tracks_df = pd.read_csv('spotify_tracks.csv')
+except FileNotFoundError:
+    print("Die Datei wurde nicht gefunden. Überprüfen Sie den Dateipfad und die Berechtigungen.")
+
 # Daten laden
 def load_data(file_name):
     return pd.read_csv(file_name)
