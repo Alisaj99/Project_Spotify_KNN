@@ -1,7 +1,7 @@
-import os
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import pickle
+import os
 
 # Pfade zu den Datendateien
 data_paths = {
@@ -27,24 +27,28 @@ def load_and_merge_data(paths):
 
     return combined_data
 
-data = load_and_merge_data(data_paths)
-features = ["acousticness", "danceability", "energy", "instrumentalness", "valence", "tempo"]
+def prepare_features(data):
+    # Auswahl und Vorbereitung der Features
+    features = ["acousticness", "danceability", "energy", "instrumentalness", "valence", "tempo"]
+    return data[features]
 
-def train_model(data, feature_columns):
-    model = NearestNeighbors()
-    model.fit(data[feature_columns])
+def train_model(features):
+    # Training des KNN-Modells
+    model = NearestNeighbors(n_neighbors=5)
+    model.fit(features)
     return model
 
-model = train_model(data, features)
+def save_model(model, model_path='model/knn_model.pkl'):
+    # Speichern des Modells mit Pickle
+    model_directory = os.path.dirname(model_path)
+    if not os.path.exists(model_directory):
+        os.makedirs(model_directory)
+    with open(model_path, 'wb') as file:
+        pickle.dump(model, file)
 
-# Stellen Sie sicher, dass das Verzeichnis existiert
-model_directory = 'model'
-if not os.path.exists(model_directory):
-    os.makedirs(model_directory)
-
-model_path = os.path.join(model_directory, 'knn_model.pkl')
-with open(model_path, 'wb') as f:
-    pickle.dump(model, f)
-
+# Ausführung der Vorbereitung und des Trainings
+data = load_and_merge_data(data_paths)
+features = prepare_features(data)
+model = train_model(features)
+save_model(model)
 print("Das Modell wurde erfolgreich trainiert und gespeichert.")
-
