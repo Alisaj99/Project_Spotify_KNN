@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 from sklearn.neighbors import NearestNeighbors
+import sklearn
 
 @st.cache(allow_output_mutation=True)
 def load_model():
