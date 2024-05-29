@@ -13,11 +13,11 @@ def load_model():
 def load_data():
     # Pfade zu den Datendateien
     data_paths = {
-        'albums': "C:/Users/jonuz/Desktop/Spotify/SpotGenTrack/Data Sources/spotify_albums.csv",
-        'artists': "C:/Users/jonuz/Desktop/Spotify/SpotGenTrack/Data Sources/spotify_artists.csv",
-        'tracks': "C:/Users/jonuz/Desktop/Spotify/SpotGenTrack/Data Sources/spotify_tracks.csv",
-        'audio_features': "C:/Users/jonuz/Desktop/Spotify/SpotGenTrack/Features Extracted/low_level_audio_features.csv",
-        'lyrics_features': "C:/Users/jonuz/Desktop/Spotify/SpotGenTrack/Features Extracted/lyrics_features.csv"
+        'albums': "https://raw.githubusercontent.com/Alisaj99/Project_Spotify_KNN/main/spotify_albums.csv",
+        'artists': "https://raw.githubusercontent.com/Alisaj99/Project_Spotify_KNN/main/spotify_artists.csv",
+        'tracks': "https://raw.githubusercontent.com/Alisaj99/Project_Spotify_KNN/main/spotify_tracks.csv",
+        'audio_features': "https://raw.githubusercontent.com/Alisaj99/Project_Spotify_KNN/main/low_level_audio_features.csv",
+        'lyrics_features': "https://raw.githubusercontent.com/Alisaj99/Project_Spotify_KNN/main/lyrics_features.csv"
     }
     
     def load_and_merge_data(paths):
